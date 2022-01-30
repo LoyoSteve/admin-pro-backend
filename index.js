@@ -8,8 +8,11 @@ const { dbConection } = require('./database/config');
 //crear servidor express
 const app = express();
 
+/*MIDDLEWARES*/
 //Configurar cors
-app.use(cors())
+app.use(cors());
+//Parse de body
+app.use( express.json() );
 
 //base de datos
 dbConection();
@@ -20,12 +23,8 @@ dbConection();
 //hola123
 
 //Ruta
-app.get( '/', (req, res) => {
-    res.json({
-        "ok": true,
-        "msg": "Hola we"
-    })
-} )
+app.use('/api/users', require('./routes/users'));
+app.use('/api/login', require('./routes/auth'));
 
 //Inico
 app.listen( process.env.PORT, () => {
