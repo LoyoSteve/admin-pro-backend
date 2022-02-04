@@ -9,12 +9,26 @@ const getUsers = async (req, res) => {
 
     //const usuarios = await UserModel.find(); trae todos los usuarios
 
+    //Obtenemos por query el numero de paginas a obtener
+    const desde = Number(req.query.desde) || 0;
+
     //Filtra las propiedades solo devuelve el nombre, email, password e id
-    const usuarios = await UserModel.find({}, 'nombre email password');
+    // const usuarios = await UserModel.find({}, 'nombre email password')
+    //                                 .skip( desde )
+    //                                 .limit( 5 );
+
+    // const total = await UserModel.count();
+
+    const [usuarios, total] = await Promise.all([
+        UserModel.find({}, 'nombre email password img').skip( desde ).limit( 5 ), 
+
+        UserModel.countDocuments()
+    ]);
 
     res.json({
         ok: true,
         usuarios,
+        total
     });
 }
 
