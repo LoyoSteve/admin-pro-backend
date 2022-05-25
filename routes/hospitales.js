@@ -21,10 +21,16 @@ router.post('/',
             createHospital)
 
 router.put('/:id', 
-            []
-            ,updateHospital)
+            [
+                validarJWT,
+                check('nombre', 'Debes escribir el nuevo nombre')
+            ],
+            updateHospital)
 
 router.delete('/:id',
+            [
+                validarJWT
+            ],
             deleteHospital)
 
 module.exports = router;

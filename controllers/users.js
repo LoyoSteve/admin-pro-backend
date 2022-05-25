@@ -28,6 +28,7 @@ const getUsers = async (req, res) => {
     res.json({
         ok: true,
         usuarios,
+        uid: req.uid,
         total
     });
 }

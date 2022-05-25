@@ -14,10 +14,12 @@ app.use(cors());
 //Parse de body
 app.use( express.json() );
 
-//base de datos
+//conectar base de datos
 dbConection();
 
-//console.log(process.env);
+/*directorio publico*/
+//con express estatic declaramos el nombre de la carpeta y servimos un index.html
+app.use(express.static('public'))
 
 //mike
 //hola123
