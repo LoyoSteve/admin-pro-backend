@@ -68,7 +68,8 @@ const updateHospital = async (req, res = response) => {
 
         res.json({
             ok: true,
-            msg: 'hospital actualizado'
+            msg: 'hospital actualizado',
+            hospital: hospitalActualizado
         });
         
     } catch (error) {
@@ -91,18 +92,18 @@ const deleteHospital = async (req, res = response) => {
 
         if(!hospitalDB){
             //si no existe
-            res.status(404).json({
+            return res.status(404).json({
                 ok: false,
                 msg: 'Hospital no encontrado'
             });
-        } else {
-            await HospitalsModel.findByIdAndDelete( hospitalUid )
-
-            res.json({
-                ok: true,
-                msg: 'hospital eliminado'
-            });
         }
+
+        await HospitalsModel.findByIdAndDelete( hospitalUid )
+
+        res.json({
+            ok: true,
+            msg: 'hospital eliminado'
+        });
         
     } catch (error) {
 

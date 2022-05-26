@@ -10,7 +10,7 @@ const { validarJWT } = require('../middlewares/validar-jwt');
 
 const router = Router();
 
-router.get('/' ,getMedicos)
+router.get('/' ,getMedicos);
 
 router.post('/', 
             [
@@ -19,13 +19,21 @@ router.post('/',
                 check('hospital', 'El id del hospital no es valido').isMongoId(),
                 validarCampos
             ], 
-            createMedico)
+            createMedico);
 
 router.put('/:id', 
-            []
-            ,updateMedico)
+            [
+                validarJWT,
+                check('nombre', 'Se necesita el nombre del medico').not().isEmpty(),
+                check('hospital', 'El id del hospital no es valido').isMongoId().not().isEmpty(),
+                validarCampos
+            ],
+            updateMedico);
 
 router.delete('/:id',
-            deleteMedico)
+            [
+                validarJWT
+            ],
+            deleteMedico);
 
 module.exports = router;

@@ -23,7 +23,7 @@ router.post('/',
 router.put('/:id', 
             [
                 validarJWT,
-                check('nombre', 'Debes escribir el nuevo nombre')
+                check('nombre', 'Debes escribir el nuevo nombre').not().isEmpty()
             ],
             updateHospital)
 
