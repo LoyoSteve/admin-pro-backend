@@ -20,7 +20,7 @@ const getUsers = async (req, res) => {
     // const total = await UserModel.count();
 
     const [usuarios, total] = await Promise.all([
-        UserModel.find({}, 'nombre email password img').skip( desde ).limit( 5 ), 
+        UserModel.find({}, '').skip( desde ).limit( 5 ), 
 
         UserModel.countDocuments()
     ]);
@@ -103,7 +103,14 @@ const updateUser = async (req, res = response) => {
             }
         }
 
-        campos.email = email;
+        if ( !userDB.google ){
+            campos.email = email;
+        } else if (userDB.email != email){
+            res.status(400).json({
+                ok: false,
+                msg: 'Usuarios de google no pueden cambiar su correo'
+            });
+        }
         const updateUser = await UserModel.findByIdAndUpdate(uid, campos, {new: true});
 
         res.json({

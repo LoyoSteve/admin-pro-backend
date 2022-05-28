@@ -80,7 +80,7 @@ const retornarImagen = async (req, res = response ) =>{
 
     //Validar que patImg sea valida
     if( !fs.existsSync( pathImg ) ){
-        pathImg = path.join(__dirname, `../uploads/404.png`);
+        pathImg = path.join(__dirname, `../uploads/404.jpg`);
     }
     res.sendFile(pathImg);
 
