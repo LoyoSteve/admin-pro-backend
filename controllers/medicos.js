@@ -17,6 +17,26 @@ const getMedicos = async (req, res = response) => {
     });
 }
 
+const getMedicoById = async (req, res = response) => {
+
+    //Filtra las propiedades solo devuelve el nombre, email, password e id
+    try {
+        const medico = await MedicoModel.findById(req.params.id)
+                                    .populate('usuario', 'nombre img')
+                                    .populate('hospital', 'nombre img');;
+
+        res.json({
+            ok: true,
+            medico
+        });
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            msg: 'Hable con el admin'
+        });
+    }
+}
+
 const createMedico = async (req, res = response) => {
     const uid = req.uid;
     const medico = new MedicoModel({
@@ -124,5 +144,6 @@ module.exports = {
     getMedicos,
     createMedico,
     updateMedico,
-    deleteMedico
+    deleteMedico,
+    getMedicoById
 }

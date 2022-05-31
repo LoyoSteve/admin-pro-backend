@@ -6,13 +6,18 @@ const { generarJWT } = require('../helpers/jwt');
 
 const getHospitales = async (req, res = response) => {
 
-    //Filtra las propiedades solo devuelve el nombre, email, password e id
-    const hospitales = await HospitalsModel.find()
-                                            .populate('usuario', 'nombre img');
+    const desde = Number(req.query.desde) || 0;
+
+    const [hospitales, total] = await Promise.all([
+        HospitalsModel.find({}, '').skip( desde ).limit(5),
+
+        HospitalsModel.countDocuments()
+    ]);
 
     res.json({
         ok: true,
-        hospitales
+        hospitales,
+        total
     });
 }
 
