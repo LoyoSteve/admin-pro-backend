@@ -24,7 +24,6 @@ const getMenuFrontEnd = (role = "USER_ROLE") => {
 
     //se agrega el item para los admins
     if ( role === "ADMIN_ROLE") {
-        console.log('admin');
         menu[1].submenu.unshift({ title: 'Usuarios', url: 'usuarios'})
     }
 
